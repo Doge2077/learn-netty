@@ -27,6 +27,10 @@ public class NettyServer {
         //创建 bossGroup workerGroup 分别管理连接建立事件和具体的业务处理事件
         EventLoopGroup boss = new NioEventLoopGroup();
         EventLoopGroup worker = new NioEventLoopGroup();
+
+        // 只创建一次 serverInboundHandler2 对象
+        ServerInboundHandler2 serverInboundHandler2 = new ServerInboundHandler2();
+
         try {
             //创建启动引导类
             ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -43,7 +47,8 @@ public class NettyServer {
                             //向 pipeline 中添加 handler，如果没有注册到这里则不会生效
                             pipeline.addLast(new ServerOutboundHandler1());
                             pipeline.addLast(new ServerInboundHandler1());
-                            pipeline.addLast(new ServerInboundHandler2());
+                            // 在这里对 serverInboundHandler2 进行复用
+                            pipeline.addLast(serverInboundHandler2);
                         }
                     }); //给 worker group 配置 handler
             //服务端绑定端口启动

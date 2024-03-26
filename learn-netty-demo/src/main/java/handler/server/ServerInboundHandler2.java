@@ -1,6 +1,7 @@
 package handler.server;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
+@ChannelHandler.Sharable
 public class ServerInboundHandler2 extends ChannelInboundHandlerAdapter {
     private static final Logger log = LoggerFactory.getLogger(ServerInboundHandler2.class);
 
